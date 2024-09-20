@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Registration</title>
+  </head>
+  <body>
+    <h1>Customer Registration</h1>
+    <form id="registration-form">
+      <div>
+        <label for="name">Customer Name:</label>
+        <input type="text" id="name" required />
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" required />
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" required />
+      </div>
+      <div>
+        <label for="mobile_number">Mobile Number:</label>
+        <input type="tel" id="mobile_number" required />
+      </div>
+      <div>
+        <label for="address">Address:</label>
+        <input type="text" id="address" required />
+      </div>
+      <div>
+        <label for="gender">Gender:</label>
+        <input type="text" id="gender" />
+      </div>
+      <button type="submit">Register</button>
+    </form>
+    <label>Already a user?</label>
+    <button>Login</button>
+
+    <script>
+      const form = document.getElementById("registration-form");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault(); // prevent the form from submitting normally
+
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const mobile_number = document.getElementById("mobile_number").value;
+        const address = document.getElementById("address").value;
+        const gender = document.getElementById("gender").value;
+
+        const data = {
+          name: name,
+          email: email,
+          password: password,
+          mobile_number: mobile_number,
+          address: address,
+          gender: gender,
+        };
+
+        fetch("http://127.0.0.1:8800/api/customers/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+            alert("Registration Successful!");
+            form.reset(); // reset the form after successful submission
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            console.
+            alert("Registration Failed!");
+          });
+      });
+    </script>
+  </body>
+</html>
